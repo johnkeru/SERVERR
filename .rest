@@ -10,7 +10,10 @@ POST http://localhost:5000/register
 Content-Type: application/json
 
 {
-    "username": "user 1",
+    "username": "new user",
     "password": 123,
     "confirm_password": 123
 }
+###
+GET http://localhost:5000/currentUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmYyN2NlYjk5YzliMTg1ZDVjN2VlZTMiLCJpYXQiOjE3MjcxNjc3MjMsImV4cCI6MTcyNzE3NDkyM30.2ZCFdsCEJnCJdWLbls9emkTTsF-fCcT-k082zD2V6t4

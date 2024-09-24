@@ -1,0 +1,10 @@
+// SERVER
+// npm init -y
+// npm i nodemon -D
+// "start": "nodemon ." // package.json
+// "create index.js"
+// "npm i express cors mongoose bcrypt"
+
+// cors : for allowing client to connect to server
+// mongoose : to connect nodejs to mongoDB
+// bcrypt : to hashed the password before saving to DB

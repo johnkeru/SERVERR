@@ -6,11 +6,12 @@ exports.login = async (req, res) => {
         const { username, password } = req.body
         const user = await User.findOne({ username })
         if (!user) return res.status(404).json({ field: 'username', message: 'No user found!' })
-        if (!user.comparePassword(password)) return res.status(404).json({ field: 'username', message: 'Incorrect password!' })
+        if (!user.comparePassword(password)) return res.status(404).json({ field: 'password', message: 'Incorrect password!' })
         const token = jwt.sign({ userId: user._id }, 'signature', { expiresIn: '2h' })
         res.json({ token })
     } catch (e) {
-        return res.status(404).json({ field: 'username', message: 'No user found!' })
+        console.log(e)
+        return res.status(500).json({ error: 'Something went wrong, Please try again later.' })
     }
 }
 
@@ -23,14 +24,13 @@ exports.register = async (req, res) => {
         const token = jwt.sign({ userId: newUser._id }, 'signature', { expiresIn: '2h' })
         res.json({ token })
     } catch (e) {
-        console.log(e)
-        return res.status(404).json({ field: 'username', message: 'No user found!' })
+        return res.status(500).json({ error: 'Something went wrong, Please try again later.' })
     }
 }
 
 exports.currentUser = async (req, res) => {
     const userId = req.userId
-    const user = await User.findById(userId)
+    const user = await User.findById(userId).select('-password')
     res.json({ user })
 }
 

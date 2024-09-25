@@ -28,7 +28,7 @@ exports.createBlog = async (req, res) => {
         const body = req.body
         const blog = new Blog(Object.assign(body, { user: userId }))
         const savedBlog = await blog.save()
-        res.status(201).json(savedBlog)
+        res.status(201).json({ blog: savedBlog })
     } catch (e) {
         res.status(500).json({ error: 'Something went wrong' })
     }

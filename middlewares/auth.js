@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
     if (!authHeader || !authHeader.startsWith('Bearer '))
         return res.status(401).json({ error: 'Unauthorized' })
     const token = authHeader.split(' ')[1]
-    if (!jwt.verify(token, 'signature'))
+    if (!jwt.verify(token, process.env.JWT_KEY))
         return res.status(401).json({ error: 'Invalid token' })
     const payload = jwt.decode(token)
     req.userId = payload.userId

@@ -7,7 +7,7 @@ exports.login = async (req, res) => {
         const user = await User.findOne({ username })
         if (!user) return res.status(404).json({ field: 'username', message: 'No user found!' })
         if (!user.comparePassword(password)) return res.status(404).json({ field: 'password', message: 'Incorrect password!' })
-        const token = jwt.sign({ userId: user._id }, 'signature', { expiresIn: '2h' })
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, { expiresIn: '2h' })
         res.json({ token })
     } catch (e) {
         console.log(e)
@@ -21,7 +21,7 @@ exports.register = async (req, res) => {
         if (password !== confirm_password) return res.json({ field: 'confirm_password', message: 'Passwords do not match' })
         const newUser = await User({ username, password })
         await newUser.save()
-        const token = jwt.sign({ userId: newUser._id }, 'signature', { expiresIn: '2h' })
+        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_KEY, { expiresIn: '2h' })
         res.json({ token })
     } catch (e) {
         return res.status(500).json({ error: 'Something went wrong, Please try again later.' })

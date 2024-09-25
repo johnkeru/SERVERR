@@ -1,3 +1,4 @@
+const BlackListedToken = require('../models/BlackListedToken')
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 
@@ -17,8 +18,7 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
     try {
-        const { username, password, confirm_password } = req.body
-        if (password !== confirm_password) return res.json({ field: 'confirm_password', message: 'Passwords do not match' })
+        const { username, password } = req.body
         const newUser = await User({ username, password })
         await newUser.save()
         const token = jwt.sign({ userId: newUser._id }, process.env.JWT_KEY, { expiresIn: '2h' })
@@ -32,5 +32,13 @@ exports.currentUser = async (req, res) => {
     const userId = req.userId
     const user = await User.findById(userId).select('-password')
     res.json({ user })
+}
+
+exports.logout = async (req, res) => {
+    const token = req.token
+    console.log(token)
+    const blackListedToken = new BlackListedToken({ token })
+    await blackListedToken.save()
+    res.json({ message: 'User successfully logged out' })
 }
 

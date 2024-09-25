@@ -2,7 +2,7 @@ const Blog = require("../models/Blog")
 
 exports.getAllBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find()
+        const blogs = await Blog.find().populate({ path: 'user', select: '-password' })
         res.json({ blogs })
     } catch (e) {
         res.status(500).json({ error: 'Something went wrong' })
@@ -24,8 +24,9 @@ exports.getBlogById = async (req, res) => {
 
 exports.createBlog = async (req, res) => {
     try {
+        const userId = req.userId
         const body = req.body
-        const blog = new Blog(body)
+        const blog = new Blog(Object.assign(body, { user: userId }))
         const savedBlog = await blog.save()
         res.status(201).json(savedBlog)
     } catch (e) {

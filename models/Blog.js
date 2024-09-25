@@ -5,7 +5,10 @@ const blogSchema = mongoose.Schema({
     title: { type: String, required: true },
     body: String,
     createdAt: { type: Date, default: Date.now },
-    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' }
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true, ref: 'User'
+    }
 })
 
 module.exports = mongoose.model('Blog', blogSchema);  

@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const userRouter = require('./routers/userRouter');
 const blogRouter = require('./routers/blogRouter');
+const socket = require('./socket/socket');
 require('./configs/dbConnect')()
 
 const app = express();
@@ -14,7 +15,9 @@ app.use(express.json())
 app.use(userRouter)
 app.use(blogRouter)
 
-app.listen(
+const server = app.listen(
     5000,
     () => console.log('Server listening on: http://localhost:5000')
 )
+
+socket(server)

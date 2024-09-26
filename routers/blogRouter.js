@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllBlogs, getBlogById, createBlog, updateBlog, deleteBlog } = require('../controllers/blogController');
+const { getAllBlogs, getBlogById, createBlog, updateBlog, deleteBlog, toggleLike } = require('../controllers/blogController');
 const auth = require('../middlewares/auth')
 
 const blogRouter = Router();
@@ -9,5 +9,7 @@ blogRouter.get('/blogs/:id', auth, getBlogById);
 blogRouter.post('/blogs', auth, createBlog);
 blogRouter.put('/blogs/:id', auth, updateBlog);
 blogRouter.delete('/blogs/:id', auth, deleteBlog);
+
+blogRouter.post('/blogs/:id/like', auth, toggleLike)
 
 module.exports = blogRouter;

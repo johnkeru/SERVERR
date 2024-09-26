@@ -6,6 +6,7 @@ exports.getAllBlogs = async (req, res) => {
             .sort({ createdAt: -1 })
             .limit(10)
             .populate({ path: 'user', select: '-password' })
+            .populate('likes')
         res.json({ blogs })
     } catch (e) {
         res.status(500).json({ error: 'Something went wrong' })
@@ -54,6 +55,29 @@ exports.deleteBlog = async (req, res) => {
     try {
         const deletedBlog = await Blog.findByIdAndDelete(req.params.id)
         res.json({ blog: deletedBlog })
+    } catch (e) {
+        res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
+exports.toggleLike = async (req, res) => {
+    try {
+        const userId = req.userId
+        const blogId = req.params.id
+        let isLike = false;
+        const blog = await Blog.findById(blogId)
+        if (!blog) return res.status(404).json({ error: 'Blog not found' })
+        // check if user alread like the blog
+        const isUserAlreadyLiked = blog.likes.includes(userId)
+        if (isUserAlreadyLiked)
+            blog.likes = blog.likes.filter(likeUserId => likeUserId.toString() !== userId)
+        else {
+            blog.likes.push(userId)
+            isLike = true
+        }
+        // before
+        await blog.save()
+        res.json({ likes: blog.likes.length, isLike })
     } catch (e) {
         res.status(500).json({ error: 'Something went wrong' })
     }

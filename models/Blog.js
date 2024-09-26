@@ -8,7 +8,13 @@ const blogSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true, ref: 'User'
-    }
+    },
+    likes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true, ref: 'User'
+        }
+    ]
 })
 
 module.exports = mongoose.model('Blog', blogSchema);  

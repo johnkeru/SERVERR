@@ -82,3 +82,13 @@ exports.toggleLike = async (req, res) => {
         res.status(500).json({ error: 'Something went wrong' })
     }
 }
+
+exports.blogLikes = async (req, res) => {
+    try {
+        const blogId = req.params.id
+        const blog = await Blog.findById(blogId).populate('likes', '-password')
+        res.json({ likes: blog.likes })
+    } catch (e) {
+        res.status(500).json({ error: 'Something went wrong' })
+    }
+}

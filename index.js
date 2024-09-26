@@ -8,8 +8,8 @@ const socket = require('./socket/socket');
 require('./configs/dbConnect')()
 
 const app = express();
-
-app.use(cors({ origin: process.env.FRONTEND_URL }))
+console.log('aewfwe')
+app.use(cors({ origin: '*' }))
 app.use(express.json())
 
 app.use(userRouter)

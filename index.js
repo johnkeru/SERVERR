@@ -5,6 +5,7 @@ const cors = require('cors');
 const userRouter = require('./routers/userRouter');
 const blogRouter = require('./routers/blogRouter');
 const socket = require('./socket/socket');
+const notificationRouter = require('./routers/notificationRouter');
 require('./configs/dbConnect')()
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json())
 
 app.use(userRouter)
 app.use(blogRouter)
+app.use(notificationRouter)
 
 const server = app.listen(
     5000,

@@ -4,7 +4,7 @@ exports.getAllBlogs = async (req, res) => {
     try {
         const blogs = await Blog.find()
             .sort({ createdAt: -1 })
-            .limit(10)
+            // .limit(10)
             .populate({ path: 'user', select: '-password' })
             .populate('likes')
         res.json({ blogs })

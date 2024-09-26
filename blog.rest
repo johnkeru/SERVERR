@@ -1,0 +1,26 @@
+GET http://localhost:5000/blogs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmYzOGY4NTI2NDI2MmFmOTY2ODYxZWQiLCJpYXQiOjE3MjcyNDkzNDksImV4cCI6MTcyNzI1NjU0OX0.G4vQn0ZtBC_nWLC8Dx5Ful8ijBBMUP8fTP5ejvs3xms
+
+###
+GET http://localhost:5000/blogs/66f3babc93fc013a1febcef4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmYzOGY4NTI2NDI2MmFmOTY2ODYxZWQiLCJpYXQiOjE3MjcyNDkzNDksImV4cCI6MTcyNzI1NjU0OX0.G4vQn0ZtBC_nWLC8Dx5Ful8ijBBMUP8fTP5ejvs3xms
+###
+POST http://localhost:5000/blogs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmYzOGY4NTI2NDI2MmFmOTY2ODYxZWQiLCJpYXQiOjE3MjcyNDkzNDksImV4cCI6MTcyNzI1NjU0OX0.G4vQn0ZtBC_nWLC8Dx5Ful8ijBBMUP8fTP5ejvs3xms
+Content-Type: application/json
+
+{
+    "title": "New post",
+    "body": "Newest Post"
+}
+###
+PUT http://localhost:5000/blogs/66f3bbfa72dcade8e5f63fae
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmYzOGY4NTI2NDI2MmFmOTY2ODYxZWQiLCJpYXQiOjE3MjcyNDkzNDksImV4cCI6MTcyNzI1NjU0OX0.G4vQn0ZtBC_nWLC8Dx5Ful8ijBBMUP8fTP5ejvs3xms
+Content-Type: application/json
+
+{
+    "title": "Updated Second blog"
+}
+###
+DELETE http://localhost:5000/blogs/66f3babc93fc013a1febcef4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmYzOGY4NTI2NDI2MmFmOTY2ODYxZWQiLCJpYXQiOjE3MjcyNDkzNDksImV4cCI6MTcyNzI1NjU0OX0.G4vQn0ZtBC_nWLC8Dx5Ful8ijBBMUP8fTP5ejvs3xms

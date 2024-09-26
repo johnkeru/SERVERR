@@ -2,7 +2,10 @@ const Blog = require("../models/Blog")
 
 exports.getAllBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find().populate({ path: 'user', select: '-password' })
+        const blogs = await Blog.find()
+            .sort({ createdAt: -1 })
+            .limit(10)
+            .populate({ path: 'user', select: '-password' })
         res.json({ blogs })
     } catch (e) {
         res.status(500).json({ error: 'Something went wrong' })
@@ -49,7 +52,7 @@ exports.updateBlog = async (req, res) => {
 
 exports.deleteBlog = async (req, res) => {
     try {
-        const deletedBlog = await Blog.findOneAndDelete(req.params.id)
+        const deletedBlog = await Blog.findByIdAndDelete(req.params.id)
         res.json({ blog: deletedBlog })
     } catch (e) {
         res.status(500).json({ error: 'Something went wrong' })

@@ -15,7 +15,7 @@ exports.getAllBlogs = async (req, res) => {
 exports.getBlogById = async (req, res) => {
     try {
         const id = req.params.id
-        const blog = await Blog.findById(id)
+        const blog = await Blog.findById(id).populate({ path: 'user', select: '-password' })
         if (!blog) return res.status(404).json({ message: 'Blog not found' })
         res.json({ blog })
         // api.get('/blog')

@@ -8,7 +8,7 @@ exports.login = async (req, res) => {
         const user = await User.findOne({ username })
         if (!user) return res.status(404).json({ field: 'username', message: 'No user found!' })
         if (!user.comparePassword(password)) return res.status(404).json({ field: 'password', message: 'Incorrect password!' })
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, { expiresIn: '1d' })
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, { expiresIn: '3d' })
         res.json({ token })
     } catch (e) {
         return res.status(500).json({ error: 'Something went wrong, Please try again later.' })
@@ -20,7 +20,7 @@ exports.register = async (req, res) => {
         const { username, password } = req.body
         const newUser = await User({ username, password })
         await newUser.save()
-        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_KEY, { expiresIn: '1d' })
+        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_KEY, { expiresIn: '3d' })
         res.json({ token })
     } catch (e) {
         if (e.errorResponse.code === 11000) {

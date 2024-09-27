@@ -15,9 +15,8 @@ exports.getAllBlogs = async (req, res) => {
         // Fetch blogs from the database
         let blogs = await Blog.find(query)
             .sort({ createdAt: -1 })
-            .select('_id')
             .limit(limit)
-        // .populate({ path: 'user', select: '-password' });
+            .populate({ path: 'user', select: '-password' });
 
         const hasMore = blogs.length === limit;
         res.json({ blogs, hasMore });

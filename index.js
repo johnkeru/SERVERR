@@ -6,6 +6,7 @@ const userRouter = require('./routers/userRouter');
 const blogRouter = require('./routers/blogRouter');
 const socket = require('./socket/socket');
 const notificationRouter = require('./routers/notificationRouter');
+const messageRouter = require('./routers/messageRouter');
 require('./configs/dbConnect')()
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use(userRouter)
 app.use(blogRouter)
 app.use(notificationRouter)
+app.use(messageRouter)
 
 const server = app.listen(
     5000,

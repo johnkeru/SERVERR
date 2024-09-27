@@ -20,9 +20,10 @@ module.exports = (server) => {
             io.to(`notification-${blog.user._id}`).emit('notification', newNotification)
         })
 
-        socket.on('message', async ({ message, sender }) => {
-            const newMessage = new Message({ message, sender })
+        socket.on('message', async ({ message, image, sender }) => {
+            const newMessage = new Message({ message, sender, image })
             await newMessage.save()
+            await newMessage.populate({ path: 'sender', select: '-password' })
             io.emit('message', newMessage)
         })
     })

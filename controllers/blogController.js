@@ -2,16 +2,30 @@ const Blog = require("../models/Blog")
 
 exports.getAllBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find()
+        const limit = 2;
+        let lastId = req.query?.lastId;
+
+        // Define the query to fetch blogs
+        let query = {};
+        if (lastId) {
+            // If `lastId` is provided, fetch blogs with _id less than lastId for pagination
+            query = { _id: { $lt: lastId } };
+        }
+
+        // Fetch blogs from the database
+        let blogs = await Blog.find(query)
             .sort({ createdAt: -1 })
-            // .limit(10)
-            .populate({ path: 'user', select: '-password' })
-            .populate('likes')
-        res.json({ blogs })
+            .select('_id')
+            .limit(limit)
+        // .populate({ path: 'user', select: '-password' });
+
+        const hasMore = blogs.length === limit;
+        res.json({ blogs, hasMore });
     } catch (e) {
-        res.status(500).json({ error: 'Something went wrong' })
+        res.status(500).json({ error: 'Something went wrong' });
     }
-}
+};
+
 
 exports.getBlogById = async (req, res) => {
     try {
@@ -69,15 +83,18 @@ exports.toggleLike = async (req, res) => {
         if (!blog) return res.status(404).json({ error: 'Blog not found' })
         // check if user alread like the blog
         const isUserAlreadyLiked = blog.likes.includes(userId)
-        if (isUserAlreadyLiked)
+        if (isUserAlreadyLiked) {
+            blog.likesCount = blog.likesCount - 1
             blog.likes = blog.likes.filter(likeUserId => likeUserId.toString() !== userId)
+        }
         else {
+            blog.likesCount = blog.likesCount + 1
             blog.likes.push(userId)
             isLike = true
         }
-        // before
+        // before save
         await blog.save()
-        res.json({ likes: blog.likes.length, isLike })
+        res.json({ likesCount: blog.likesCount, isLike })
     } catch (e) {
         res.status(500).json({ error: 'Something went wrong' })
     }

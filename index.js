@@ -9,7 +9,7 @@ const notificationRouter = require('./routers/notificationRouter');
 require('./configs/dbConnect')()
 
 const app = express();
-console.log('aewfwe')
+
 app.use(cors({ origin: '*' }))
 app.use(express.json())
 

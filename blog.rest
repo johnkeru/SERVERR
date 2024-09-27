@@ -1,5 +1,5 @@
-GET http://localhost:5000/blogs
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmYzOGY4NTI2NDI2MmFmOTY2ODYxZWQiLCJpYXQiOjE3MjcyNDkzNDksImV4cCI6MTcyNzI1NjU0OX0.G4vQn0ZtBC_nWLC8Dx5Ful8ijBBMUP8fTP5ejvs3xms
+GET http://localhost:5000/blogs?lastId=66f602b3dfc994e0341b53c9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmY1ZmZkZGM5YWNiZDQ3NWRiYTEzOGIiLCJpYXQiOjE3MjczOTgzMjgsImV4cCI6MTcyNzQ4NDcyOH0.9AvY9SZCBlE5ZW6dwB3oFRhdXtfAVihg0hQ9mBvxcPM
 
 ###
 GET http://localhost:5000/blogs/66f3babc93fc013a1febcef4

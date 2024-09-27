@@ -5,5 +5,6 @@ exports.getNotifications = async (req, res) => {
     const notifications = await Notification.find({ owner: userId })
         .populate({ path: 'sender', select: '-password' })
         .populate({ path: 'blog' })
+        .sort({ createdAt: -1 })
     res.json({ notifications })
 }

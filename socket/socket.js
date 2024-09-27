@@ -4,8 +4,9 @@ const Notification = require('../models/Notification')
 module.exports = (server) => {
     const io = new Server(server, { cors: true })
     io.on('connection', (socket) => {
-        socket.on('create-room-notification', (user) => {
-            socket.join(`notification-${user}`)
+        // WHEN A USER LOGGED IN IT AUTOMATICALLY CREATE A ROOM FOR NOTIFICATION (notification-userId)
+        socket.on('create-room-notification', (userId) => {
+            socket.join(`notification-${userId}`)
         })
 
         socket.on('notification', async ({ title, sender, blog }) => {

@@ -11,7 +11,6 @@ exports.login = async (req, res) => {
         const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, { expiresIn: '1d' })
         res.json({ token })
     } catch (e) {
-        console.log(e)
         return res.status(500).json({ error: 'Something went wrong, Please try again later.' })
     }
 }
@@ -24,6 +23,9 @@ exports.register = async (req, res) => {
         const token = jwt.sign({ userId: newUser._id }, process.env.JWT_KEY, { expiresIn: '1d' })
         res.json({ token })
     } catch (e) {
+        if (e.errorResponse.code === 11000) {
+            return res.status(500).json({ field: 'username', message: 'Username must be unique!' })
+        }
         return res.status(500).json({ error: 'Something went wrong, Please try again later.' })
     }
 }
@@ -36,7 +38,6 @@ exports.currentUser = async (req, res) => {
 
 exports.logout = async (req, res) => {
     const token = req.token
-    console.log(token)
     const blackListedToken = new BlackListedToken({ token })
     await blackListedToken.save()
     res.json({ message: 'User successfully logged out' })
